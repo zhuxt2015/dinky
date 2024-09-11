@@ -117,6 +117,8 @@ public interface JobInstanceService extends ISuperService<JobInstance> {
      */
     JobInstance getJobInstanceByTaskId(Integer id);
 
+    JobInstance getJobInstanceByTaskName(String taskName);
+
     /**
      * List all job instances in the system.
      *

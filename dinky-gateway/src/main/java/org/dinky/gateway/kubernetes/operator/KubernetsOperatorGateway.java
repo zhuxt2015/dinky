@@ -124,8 +124,8 @@ public abstract class KubernetsOperatorGateway extends KubernetesGateway {
                 .args(userJarParas)
                 .parallelism(Integer.parseInt(parallelism));
 
-        if (Asserts.isNotNull(config.getFlinkConfig().getSavePoint())) {
-            String savePointPath = config.getFlinkConfig().getSavePoint();
+        String savePointPath = config.getFlinkConfig().getConfiguration().get("execution.savepoint.path");
+        if (Asserts.isNotNull(savePointPath)) {
             jobSpecBuilder.initialSavepointPath(savePointPath);
             jobSpecBuilder.upgradeMode(UpgradeMode.SAVEPOINT);
 

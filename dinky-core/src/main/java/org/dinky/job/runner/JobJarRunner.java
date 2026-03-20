@@ -53,7 +53,6 @@ import org.apache.flink.configuration.PipelineOptions;
 import org.apache.flink.core.execution.JobClient;
 import org.apache.flink.runtime.jobgraph.JobGraph;
 import org.apache.flink.runtime.jobgraph.SavepointConfigOptions;
-import org.apache.flink.runtime.jobgraph.SavepointRestoreSettings;
 import org.apache.flink.streaming.api.graph.StreamGraph;
 
 import java.io.File;
@@ -63,7 +62,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import cn.hutool.core.lang.Assert;
@@ -176,8 +174,7 @@ public class JobJarRunner extends AbstractJobRunner {
             Map<String, String> configJson = jobManager.getConfig().getConfigJson();
             if (Asserts.isNotNullString(savePointPath)
                     || (Asserts.isNotNull(configJson)
-                            && Asserts.isNotNullString(
-                                    configJson.get(SavepointConfigOptions.SAVEPOINT_PATH.key())))) {
+                            && Asserts.isNotNullString(configJson.get(SavepointConfigOptions.SAVEPOINT_PATH.key())))) {
                 String effectivePath = Asserts.isNotNullString(savePointPath)
                         ? savePointPath
                         : configJson.get(SavepointConfigOptions.SAVEPOINT_PATH.key());
@@ -191,8 +188,7 @@ public class JobJarRunner extends AbstractJobRunner {
                 Configuration rootConfiguration =
                         executor.getCustomTableEnvironment().getRootConfiguration();
                 rootConfiguration.set(SavepointConfigOptions.SAVEPOINT_PATH, effectivePath);
-                rootConfiguration.set(
-                        SavepointConfigOptions.SAVEPOINT_IGNORE_UNCLAIMED_STATE, allowNonRestored);
+                rootConfiguration.set(SavepointConfigOptions.SAVEPOINT_IGNORE_UNCLAIMED_STATE, allowNonRestored);
             }
         }
         return pipeline;
